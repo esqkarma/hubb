@@ -12,17 +12,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Center(
-        child: AnimatedTextKit(
-        animatedTexts: [
-          FlickerAnimatedText("HuBB",textStyle: TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.bold,
-            color: Colors.purple
-          ))
-        ], 
-          repeatForever: true, // Keeps the animation running
-                                ),
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text("Login Page"),
       )
                             );
   }
