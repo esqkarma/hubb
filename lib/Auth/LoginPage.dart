@@ -3,6 +3,8 @@ import 'package:hubb/Utils/colors.dart';
 import 'package:hubb/Widgets/TextWIdget.dart';
 import 'package:hubb/Widgets/Textfield.dart';
 
+import 'SignUpPage.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -24,12 +26,20 @@ class _LoginPageState extends State<LoginPage> {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: TextWidget(
-                    rightPadding: 5,
-                    topPadding: 5,
-                    data: "SignUp",
-                    size: 19,
-                    color: purple_One,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignUpPage()),
+                              (route) => false);
+                    },
+                    child: TextWidget(
+                      rightPadding: 5,
+                      topPadding: 5,
+                      data: "SignUp",
+                      size: 19,
+                      color: purple_One,
+                    ),
                   ),
                 ),
               ),
