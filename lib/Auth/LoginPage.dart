@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                           spacing: 15,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextfieldWidget(hintText: "mobile/email"),
+                            TextfieldWidget(hintText: "mobile/email",),
                             SizedBox(
                               width: width,
                               child: Row(

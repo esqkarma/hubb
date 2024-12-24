@@ -22,6 +22,7 @@ class TextfieldWidget extends StatelessWidget {
 
             hintStyle: TextStyle(
               fontSize: 15,
+              color: Colors.black54
 
             ),
             filled: true,
