@@ -2,6 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:hubb/Auth/LoginPage.dart';
 
+import '../Utils/colors.dart';
+
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
 
@@ -23,7 +25,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[100],
+      backgroundColor: textField_Color,
       body: Center(
         child: AnimatedTextKit(
           animatedTexts: [
