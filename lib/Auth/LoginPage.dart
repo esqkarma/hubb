@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hubb/Pages/HomePage.dart';
 import 'package:hubb/Utils/colors.dart';
 import 'package:hubb/Widgets/TextWIdget.dart';
 import 'package:hubb/Widgets/Textfield.dart';
 
+import '../Services/Functions/firebaseFunctions.dart';
 import 'SignUpPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  FirebaseFunctions firebaseFunctions = FirebaseFunctions();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -75,16 +80,18 @@ class _LoginPageState extends State<LoginPage> {
                           spacing: 15,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextfieldWidget(hintText: "mobile/email",),
+                            TextfieldWidget(hintText: "mobile/email",
+                            textEditingController: emailController,),
                             SizedBox(
                               width: width,
                               child: Row(
                                 children: [
                                   TextfieldWidget(
                                     hintText: "password",
+                                    textEditingController: passwordController,
                                   ),
                                   SizedBox(
-                                    width: width * 0.35,
+                                    width: width * 0.36,
                                     child: TextButton(
                                         onPressed: () {},
                                         child: TextWidget(
@@ -111,7 +118,25 @@ class _LoginPageState extends State<LoginPage> {
                                     height: width*0.12,
                                     width:width*0.35,
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () async{
+                                       String errorMessage = await firebaseFunctions.loginUser(emailController.text.trim(), passwordController.text.trim());
+
+                                       if(errorMessage.isEmpty)
+                                         {
+                                           String userName = await firebaseFunctions.getUserName();
+                                           Navigator.pushReplacement(
+                                             context,
+                                             MaterialPageRoute(builder: (context) => HomePage(userName)),  // Replace HomePage() with your actual home page widget
+                                           );
+                                         }
+                                       else
+                                         {
+                                           print(errorMessage);
+                                         }
+
+
+
+                                      },
                                       child: TextWidget(
                                         data: "Login",
                                         color: Colors.white,

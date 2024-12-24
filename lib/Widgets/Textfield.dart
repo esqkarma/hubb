@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../Utils/colors.dart';
 class TextfieldWidget extends StatelessWidget {
+  final TextEditingController? textEditingController;
  final String? hintText;
- const TextfieldWidget({this.hintText,super.key});
+ const TextfieldWidget({this.textEditingController,this.hintText,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,7 @@ class TextfieldWidget extends StatelessWidget {
       height: width * 0.15,
       width: width * 0.60,
       child: TextField(
+        controller:textEditingController,
         decoration: InputDecoration(
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

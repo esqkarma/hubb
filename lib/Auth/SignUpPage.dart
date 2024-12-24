@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hubb/Auth/LoginPage.dart';
+import 'package:hubb/Services/Functions/firebaseFunctions.dart';
 import 'package:hubb/Utils/colors.dart';
 import 'package:hubb/Widgets/TextWIdget.dart';
 import 'package:hubb/Widgets/Textfield.dart';
@@ -12,10 +13,25 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  FirebaseFunctions firebaseFunctions = FirebaseFunctions();
+
+  //Controllers
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
@@ -28,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (ctx) => LoginPage()),
-                        (route) => false);
+                            (route) => false);
                   },
                   child: TextWidget(
                     rightPadding: 5,
@@ -41,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Positioned(
                 left: 10,
-                top: height*0.10,
+                top: height * 0.10,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15,),
                   child: SingleChildScrollView(
@@ -49,29 +65,29 @@ class _SignUpPageState extends State<SignUpPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextWidget(
-                            data: "Welcome",
-                            size: 45,
-                            color: purple_Two,
-                            fontWeight: FontWeight.w300,
-                          ),
-
-                          TextWidget(data: "Onboard",size: 26,),
-                          SizedBox(
-                            height: 30,
-                            width: width * 0.75,
-                            child: TextWidget(
-                              data:
-                              "find the best events in your community",
-                              maxline: 2,
-                              size: width * 0.04,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextWidget(
+                              data: "Welcome",
+                              size: 45,
+                              color: purple_Two,
+                              fontWeight: FontWeight.w300,
                             ),
-                          ),
-                        ],
-                      ),
+
+                            TextWidget(data: "Onboard", size: 26,),
+                            SizedBox(
+                              height: 30,
+                              width: width * 0.75,
+                              child: TextWidget(
+                                data:
+                                "find the best events in your community",
+                                maxline: 2,
+                                size: width * 0.04,
+                              ),
+                            ),
+                          ],
+                        ),
                         //
                         SizedBox(height: 30,),
                         //
@@ -88,46 +104,53 @@ class _SignUpPageState extends State<SignUpPage> {
                                   ),
                                   TextfieldWidget(
                                     hintText: "mobile/email",
+                                    textEditingController: emailController,
                                   ),
                                   TextfieldWidget(
                                     hintText: "password",
+                                    textEditingController: passwordController,
                                   ),
 
                                   TextfieldWidget(
                                     hintText: "confirm password",
+                                    textEditingController: confirmPassController,
                                   ),
-
-
 
 
                                   SizedBox(
                                       width: width,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .end,
                                         children: [
                                           SizedBox(
                                             height: width * 0.12,
                                             width: width * 0.35,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(right: 30),
+                                              padding: const EdgeInsets.only(
+                                                  right: 30),
                                               child: ElevatedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  firebaseFunctions
+                                                      .registerUser(
+                                                      emailController.text
+                                                          .trim(), passwordController.text.trim());
+                                                },
                                                 child: TextWidget(
-                                                  data: "Login",
+                                                  data: "SignUp",
                                                   color: Colors.white,
                                                 ),
                                                 style: ElevatedButton.styleFrom(
                                                     backgroundColor: buttonColor,
                                                     shape: RoundedRectangleBorder(
                                                         borderRadius:
-                                                        BorderRadius.circular(15))),
+                                                        BorderRadius.circular(
+                                                            15))),
                                               ),
                                             ),
                                           )
                                         ],
                                       ))
-
-
 
 
                                 ],
