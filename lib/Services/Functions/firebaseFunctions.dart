@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseFunctions
 {
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore firestoreAuth = FirebaseFirestore.instance;
 
   Future<void> registerUser(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -18,18 +19,14 @@ class FirebaseFunctions
   }
   Future<String> loginUser(String email, String password) async {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      print(userCredential);
 
-      // If login is successful, you can print the user UID
       print("User logged in: ${userCredential.user?.uid}");
 
-      // If login is successful, navigate to the Home screen or another page
-      // This is an example using a callback function to handle navigation
-      // You can pass the context from the UI widget to handle navigation after login
-      // You can navigate here using your navigation logic or return a success result.
       return '';
     } catch (e) {
       print("Login failed: $e");
@@ -60,15 +57,15 @@ class FirebaseFunctions
     }
   }
 
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
 
   // Method to get the current user's name
   Future<String> getUserName() async {
-    User? user = auth.currentUser; // Get the currently logged-in user
+    User? user = firebaseAuth.currentUser; // Get the currently logged-in user
 
     if (user != null) {
       // Fetch user data from Firestore using user ID
-      DocumentSnapshot snapshot = await _firestore.collection('users').doc(user.uid).get();
+      DocumentSnapshot snapshot = await firestoreAuth.collection('users').doc(user.uid).get();
 
       if (snapshot.exists) {
         return snapshot['name'] ?? 'No name available'; // Return the user's name

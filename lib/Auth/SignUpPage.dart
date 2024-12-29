@@ -16,6 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   FirebaseFunctions firebaseFunctions = FirebaseFunctions();
 
   //Controllers
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
@@ -101,6 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 children: [
                                   TextfieldWidget(
                                     hintText: "username",
+                                    textEditingController: usernameController,
                                   ),
                                   TextfieldWidget(
                                     hintText: "mobile/email",
@@ -131,10 +133,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                                   right: 30),
                                               child: ElevatedButton(
                                                 onPressed: () {
-                                                  firebaseFunctions
-                                                      .registerUser(
-                                                      emailController.text
-                                                          .trim(), passwordController.text.trim());
+
+                                                  if(passwordController.text == confirmPassController.text && usernameController.text.isNotEmpty && emailController.text.isNotEmpty)
+                                                    {
+                                                      firebaseFunctions
+                                                          .registerUser(
+                                                          emailController.text
+                                                              .trim(), passwordController.text.trim());
+                                                      print('going to firebase');
+                                                    }else{
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(
+                                                        content: Text("Incorrect password. Please try again."),
+                                                        backgroundColor: Colors.red,
+                                                      ),
+                                                    );
+                                                  }
+
                                                 },
                                                 child: TextWidget(
                                                   data: "SignUp",
